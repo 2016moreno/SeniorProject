@@ -30,10 +30,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^0.17.4 #Help us to use SVG in our app
   provider: ^4.3.1 # For state management
+  url_launcher: ^6.0.2
+  webview_flutter: ^2.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  http: ^0.12.0+2
   tflite: ^1.0.4
   image_picker: ^0.6.1+8
   image: ^2.1.4
