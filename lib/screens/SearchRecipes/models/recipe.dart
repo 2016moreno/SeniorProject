@@ -1,12 +1,12 @@
-class RecipeModel {
+class RModel {
   int id;
   String title;
   String image;
 
-  RecipeModel({this.id, this.title, this.image});
+  RModel({this.id, this.title, this.image});
 
-  factory RecipeModel.fromMap(Map<String, dynamic> parsedJson) {
-    return RecipeModel(
+  factory RModel.fromMap(Map<String, dynamic> parsedJson) {
+    return RModel(
       id: parsedJson["id"],
       title: parsedJson["title"],
       image: parsedJson["image"],

@@ -20,10 +20,10 @@ class SearchRecipe extends StatefulWidget {
 class _SearchRecipeState extends State<SearchRecipe> {
   TextEditingController textEditingController = new TextEditingController();
 
-  List<RecipeModel> recipes = new List<RecipeModel>();
+  List<RModel> rlist = new List<RModel>();
   String applicationKey = '54faac17dd374f5fb46e743c18a4c92e';
 
-  getRecipes(String query) async {
+  getRfromAPI(String query) async {
     String url =
         "https://api.spoonacular.com/recipes/complexSearch?apiKey=54faac17dd374f5fb46e743c18a4c92e&query=$query";
 
@@ -31,14 +31,14 @@ class _SearchRecipeState extends State<SearchRecipe> {
     Map<String, dynamic> jsonData = jsonDecode(response.body);
 
     jsonData["results"].forEach((element) {
-      RecipeModel recipeModel = new RecipeModel();
-      recipeModel = RecipeModel.fromMap(element);
-      recipes.add(recipeModel);
+      RModel rfromapi = new RModel();
+      rfromapi = RModel.fromMap(element);
+      rlist.add(rfromapi);
     });
 
     setState(() {});
 
-    print("${recipes.toString()}");
+    print("${rlist.toString()}");
   }
 
   @override
@@ -92,7 +92,7 @@ class _SearchRecipeState extends State<SearchRecipe> {
                       InkWell(
                         onTap: () {
                           if (textEditingController.text.isNotEmpty) {
-                            getRecipes(textEditingController.text);
+                            getRfromAPI(textEditingController.text);
                           } else {
                             print("typing error");
                           }
@@ -118,12 +118,12 @@ class _SearchRecipeState extends State<SearchRecipe> {
                     maxCrossAxisExtent: 200,
                     mainAxisSpacing: 10.0,
                   ),
-                  children: List.generate(recipes.length, (index) {
+                  children: List.generate(rlist.length, (index) {
                     return GridTile(
                       child: RecipieTile(
-                        title: recipes[index].title,
-                        imgUrl: recipes[index].image,
-                        id: recipes[index].id,
+                        title: rlist[index].title,
+                        imgUrl: rlist[index].image,
+                        id: rlist[index].id,
                       ),
                     );
                   }),
@@ -211,11 +211,7 @@ class _RecipieTileState extends State<RecipieTile> {
                 Container(
                   width: 200,
                   alignment: Alignment.bottomLeft,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Colors.white30, Colors.white],
-                          begin: FractionalOffset.centerRight,
-                          end: FractionalOffset.centerLeft)),
+                  // decoration: BoxDecoration(padding: ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -224,9 +220,27 @@ class _RecipieTileState extends State<RecipieTile> {
                         Text(
                           widget.title,
                           style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.black54,
-                          ),
+                              inherit: true,
+                              fontSize: 20.0,
+                              color: Colors.white,
+                              shadows: [
+                                Shadow(
+                                    // bottomLeft
+                                    offset: Offset(-1.5, -1.5),
+                                    color: Colors.black),
+                                Shadow(
+                                    // bottomRight
+                                    offset: Offset(1.5, -1.5),
+                                    color: Colors.black),
+                                Shadow(
+                                    // topRight
+                                    offset: Offset(1.5, 1.5),
+                                    color: Colors.black),
+                                Shadow(
+                                    // topLeft
+                                    offset: Offset(-1.5, 1.5),
+                                    color: Colors.black),
+                              ]),
                         ),
                       ],
                     ),
@@ -237,69 +251,6 @@ class _RecipieTileState extends State<RecipieTile> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class GradientCard extends StatelessWidget {
-  final Color topColor;
-  final Color bottomColor;
-  final String topColorCode;
-  final String bottomColorCode;
-
-  GradientCard(
-      {this.topColor,
-      this.bottomColor,
-      this.topColorCode,
-      this.bottomColorCode});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Wrap(
-        children: <Widget>[
-          Container(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  height: 160,
-                  width: 180,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [topColor, bottomColor],
-                          begin: FractionalOffset.topLeft,
-                          end: FractionalOffset.bottomRight)),
-                ),
-                Container(
-                  width: 180,
-                  alignment: Alignment.bottomLeft,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Colors.white30, Colors.white],
-                          begin: FractionalOffset.centerRight,
-                          end: FractionalOffset.centerLeft)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          topColorCode,
-                          style: TextStyle(fontSize: 16, color: Colors.black54),
-                        ),
-                        Text(
-                          bottomColorCode,
-                          style: TextStyle(fontSize: 16, color: bottomColor),
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
