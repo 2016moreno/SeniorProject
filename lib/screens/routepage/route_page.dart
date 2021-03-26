@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/constants.dart';
+import 'package:food_app/screens/FoodSaver/foodsaver.dart';
 import 'package:food_app/screens/SearchRecipes/searchrecipe.dart';
 import 'package:food_app/screens/routepage/route_page.dart';
 import 'package:food_app/size_config.dart';
@@ -69,9 +70,11 @@ class RoutePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 color: kPrimaryColor,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, FoodSaver.routeName);
+                },
                 child: Text(
-                  "Build a recipe!",
+                  "Food Saver Feature",
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     color: Colors.white,
@@ -90,7 +93,7 @@ class RoutePage extends StatelessWidget {
                 color: kPrimaryColor,
                 onPressed: () {},
                 child: Text(
-                  "Food Saver Feature",
+                  "Build a recipe",
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     color: Colors.white,

@@ -11,6 +11,27 @@ class RecipeView extends StatefulWidget {
   _RecipeViewState createState() => _RecipeViewState();
 }
 
+// class _RecipeViewState extends State<RecipeView> {
+//   String finalUrl;
+//   @override
+//   void initState() {
+//     if (widget.postUrl.contains("http://")) {
+//       finalUrl = widget.postUrl.replaceAll("http://", "https://");
+//     } else {
+//       finalUrl = widget.postUrl;
+//     }
+//     super.initState();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(),
+//       body: Container(child: Text("${finalUrl.toString()}")),
+//     );
+//   }
+// }
+
 class _RecipeViewState extends State<RecipeView> {
   String finalUrl;
   final Completer<WebViewController> _controller =
@@ -33,7 +54,7 @@ class _RecipeViewState extends State<RecipeView> {
         child: Column(
           children: <Widget>[
             Container(
-              height: MediaQuery.of(context).size.height - 100,
+              height: MediaQuery.of(context).size.height - 106,
               width: MediaQuery.of(context).size.width,
               child: WebView(
                 initialUrl: finalUrl,

@@ -31,8 +31,6 @@ class _SearchRecipeState extends State<SearchRecipe> {
     Map<String, dynamic> jsonData = jsonDecode(response.body);
 
     jsonData["results"].forEach((element) {
-      //print(element.toString());
-
       RecipeModel recipeModel = new RecipeModel();
       recipeModel = RecipeModel.fromMap(element);
       recipes.add(recipeModel);
@@ -95,9 +93,8 @@ class _SearchRecipeState extends State<SearchRecipe> {
                         onTap: () {
                           if (textEditingController.text.isNotEmpty) {
                             getRecipes(textEditingController.text);
-                            print("just do it");
                           } else {
-                            print("just dont do it");
+                            print("typing error");
                           }
                         },
                         child: Container(
@@ -144,6 +141,8 @@ class RecipieTile extends StatefulWidget {
   final String title, imgUrl;
   final int id; //add url and desc later
 
+  String foodwebsite;
+
   var receiver;
 
   RecipieTile(
@@ -163,26 +162,19 @@ class _RecipieTileState extends State<RecipieTile> {
     }
   }
 
-  List<IngredientModel> ingredients = new List<IngredientModel>();
+  var apikey = '54faac17dd374f5fb46e743c18a4c92e&';
+  //"https://api.spoonacular.com/recipes/$foodurl/information?apiKey=54faac17dd374f5fb46e743c18a4c92e&"
 
-  var receiver;
+  String ingredients;
 
-  getIngredients(String foodurl) async {
+  getIngredients(String recipeurl) async {
     String url =
-        "https://api.spoonacular.com/recipes/$foodurl/information?apiKey=54faac17dd374f5fb46e743c18a4c92e&";
+        "https://api.spoonacular.com/recipes/$recipeurl/information?apiKey=$apikey";
 
     var response = await http.get(url);
     Map<String, dynamic> jsonData = jsonDecode(response.body);
 
-    jsonData["spoonacularSourceUrl"]((element) {
-      print(element.toString());
-
-      receiver = element.toString();
-
-      IngredientModel ingredientModel = new IngredientModel();
-      ingredientModel = IngredientModel.fromMap(element);
-      ingredients.add(ingredientModel);
-    });
+    ingredients = jsonData["spoonacularSourceUrl"];
 
     setState(() {});
 
@@ -194,18 +186,16 @@ class _RecipieTileState extends State<RecipieTile> {
     return Wrap(
       children: <Widget>[
         GestureDetector(
-          onTap: () {
+          onTap: () async {
             var recipeurl = widget.id.toString();
+            await getIngredients(recipeurl);
 
-            getIngredients(recipeurl);
-
-            print(recipeurl + " this is what we are going to see");
+            print(ingredients.toString());
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => RecipeView(
-                          postUrl:
-                              "https://api.spoonacular.com/recipes/$recipeurl/information?apiKey=54faac17dd374f5fb46e743c18a4c92e&",
+                          postUrl: ingredients,
                         )));
           },
           child: Container(
