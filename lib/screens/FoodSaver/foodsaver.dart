@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:food_app/screens/SearchRecipes/models/ingredients.dart';
+import 'package:food_app/screens/FoodSaver/models/foodsaveringredients.dart';
 import 'package:food_app/screens/SearchRecipes/models/recipe.dart';
 import 'package:food_app/screens/SearchRecipes/recipe_view.dart';
 
@@ -21,6 +21,42 @@ class FoodSaver extends StatefulWidget {
 class _FoodSaverState extends State<FoodSaver> {
   List<String> ingredients = List();
   String temp;
+  var arr = [];
+
+  List<FoodSaverModel> foodsaverrecipes = new List<FoodSaverModel>();
+  String applicationKey = '54faac17dd374f5fb46e743c18a4c92e';
+
+  getRecipesIngredients(var query) async {
+    query = query.toString();
+    String url =
+        "https://api.spoonacular.com/recipes/findByIngredients?apiKey=54faac17dd374f5fb46e743c18a4c92e&ingredients=$query&number=10&ranking2";
+
+    var response = await http.get(url);
+    Map<String, dynamic> jsonData = jsonDecode(response.body);
+
+    jsonData["id"].forEach((element) {
+      FoodSaverModel foodsaverModel = new FoodSaverModel();
+      foodsaverModel = FoodSaverModel.fromMap(element);
+      foodsaverrecipes.add(foodsaverModel);
+    });
+
+    jsonData["title"].forEach((element) {
+      FoodSaverModel foodsaverModel = new FoodSaverModel();
+      foodsaverModel = FoodSaverModel.fromMap(element);
+      foodsaverrecipes.add(foodsaverModel);
+    });
+
+    jsonData["image"].forEach((element) {
+      FoodSaverModel foodsaverModel = new FoodSaverModel();
+      foodsaverModel = FoodSaverModel.fromMap(element);
+      foodsaverrecipes.add(foodsaverModel);
+    });
+
+    setState(() {});
+
+    print("${foodsaverrecipes.toString()}");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,13 +82,33 @@ class _FoodSaverState extends State<FoodSaver> {
           //   child: Container(),
           // ),
           Container(
-            padding: EdgeInsets.all(16),
             child: buildInsertButton(),
+          ),
+          Container(
+            child: buildSearchButton(),
           ),
           ListView(
             shrinkWrap: true,
             padding: const EdgeInsets.all(20.0),
             children: ingredients.map((element) => Text(element)).toList(),
+          ),
+          GridView(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            physics: ClampingScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
+              mainAxisSpacing: 10.0,
+            ),
+            children: List.generate(foodsaverrecipes.length, (index) {
+              return GridTile(
+                child: RecipieTile(
+                  title: foodsaverrecipes[index].title,
+                  imgUrl: foodsaverrecipes[index].image,
+                  id: foodsaverrecipes[index].id,
+                ),
+              );
+            }),
           ),
         ],
       ),
@@ -68,7 +124,183 @@ class _FoodSaverState extends State<FoodSaver> {
         onPressed: () {
           setState(() {
             ingredients.add(temp);
+            arr.add(temp);
           });
         },
       );
+
+  Widget buildSearchButton() => RaisedButton(
+        child: Text(
+          'Search for Recipes',
+          style: TextStyle(fontSize: 20),
+        ),
+        color: Color(0xFFFF7643),
+        onPressed: () async {
+          await getRecipesIngredients(arr);
+          print(
+              "https://api.spoonacular.com/recipes/findByIngredients?apiKey=54faac17dd374f5fb46e743c18a4c92e&ingredients=$arr&number=10&ranking2");
+        },
+      );
+}
+
+class RecipieTile extends StatefulWidget {
+  final String title, imgUrl;
+  final int id;
+
+  RecipieTile({this.title, this.imgUrl, this.id});
+
+  @override
+  _RecipieTileState createState() => _RecipieTileState();
+}
+
+class _RecipieTileState extends State<RecipieTile> {
+  _launchURL(String url) async {
+    print(url);
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  var apikey = '54faac17dd374f5fb46e743c18a4c92e&';
+  //"https://api.spoonacular.com/recipes/$foodurl/information?apiKey=54faac17dd374f5fb46e743c18a4c92e&"
+
+  String ingredients;
+
+  getIngredients(String recipeurl) async {
+    String url =
+        "https://api.spoonacular.com/recipes/$recipeurl/information?apiKey=$apikey";
+
+    var response = await http.get(url);
+    Map<String, dynamic> jsonData = jsonDecode(response.body);
+
+    ingredients = jsonData["spoonacularSourceUrl"];
+
+    setState(() {});
+
+    print("${ingredients.toString()}");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: <Widget>[
+        GestureDetector(
+          onTap: () async {
+            var recipeurl = widget.id.toString();
+            await getIngredients(recipeurl);
+
+            print(ingredients.toString());
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RecipeView(
+                          postUrl: ingredients,
+                        )));
+          },
+          child: Container(
+            margin: EdgeInsets.all(8),
+            child: Stack(
+              children: <Widget>[
+                Image.network(
+                  widget.imgUrl,
+                  height: 200,
+                  width: 200,
+                  fit: BoxFit.cover,
+                ),
+                Container(
+                  width: 200,
+                  alignment: Alignment.bottomLeft,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [Colors.white30, Colors.white],
+                          begin: FractionalOffset.centerRight,
+                          end: FractionalOffset.centerLeft)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          widget.title,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class GradientCard extends StatelessWidget {
+  final Color topColor;
+  final Color bottomColor;
+  final String topColorCode;
+  final String bottomColorCode;
+
+  GradientCard(
+      {this.topColor,
+      this.bottomColor,
+      this.topColorCode,
+      this.bottomColorCode});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Wrap(
+        children: <Widget>[
+          Container(
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  height: 160,
+                  width: 180,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [topColor, bottomColor],
+                          begin: FractionalOffset.topLeft,
+                          end: FractionalOffset.bottomRight)),
+                ),
+                Container(
+                  width: 180,
+                  alignment: Alignment.bottomLeft,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [Colors.white30, Colors.white],
+                          begin: FractionalOffset.centerRight,
+                          end: FractionalOffset.centerLeft)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          topColorCode,
+                          style: TextStyle(fontSize: 16, color: Colors.black54),
+                        ),
+                        Text(
+                          bottomColorCode,
+                          style: TextStyle(fontSize: 16, color: bottomColor),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -57,7 +57,7 @@ class _SearchRecipeState extends State<SearchRecipe> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  "What will you cook today?",
+                  "What recipe will you choose today?",
                   style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
                 SizedBox(
