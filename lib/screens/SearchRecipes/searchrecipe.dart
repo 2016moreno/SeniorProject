@@ -63,10 +63,6 @@ class _SearchRecipeState extends State<SearchRecipe> {
                 SizedBox(
                   height: 8,
                 ),
-                Text(
-                  "Enter either the food you're looking for or even search with ingredients!",
-                  style: TextStyle(fontSize: 15, color: Colors.black),
-                ),
                 SizedBox(
                   height: 30,
                 ),
@@ -78,7 +74,7 @@ class _SearchRecipeState extends State<SearchRecipe> {
                         child: TextField(
                           controller: textEditingController,
                           decoration: InputDecoration(
-                            hintText: "Enter Food",
+                            hintText: "Search for Recipe",
                             hintStyle: TextStyle(fontSize: 18),
                           ),
                           style: TextStyle(

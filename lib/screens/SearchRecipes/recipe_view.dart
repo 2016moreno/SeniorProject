@@ -11,6 +11,7 @@ class RecipeView extends StatefulWidget {
   _RecipeViewState createState() => _RecipeViewState();
 }
 
+//////////////Making sure that I was able to see the url on next page
 // class _RecipeViewState extends State<RecipeView> {
 //   String finalUrl;
 //   @override
