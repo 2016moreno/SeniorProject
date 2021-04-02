@@ -21,11 +21,11 @@ class _SearchRecipeState extends State<SearchRecipe> {
   TextEditingController textEditingController = new TextEditingController();
 
   List<RModel> rlist = new List<RModel>();
-  String applicationKey = '54faac17dd374f5fb46e743c18a4c92e';
+  String apiKey = '54faac17dd374f5fb46e743c18a4c92e';
 
   getRfromAPI(String query) async {
     String url =
-        "https://api.spoonacular.com/recipes/complexSearch?apiKey=54faac17dd374f5fb46e743c18a4c92e&query=$query";
+        "https://api.spoonacular.com/recipes/complexSearch?apiKey=$apiKey&query=$query";
 
     var response = await http.get(url);
     Map<String, dynamic> jsonData = jsonDecode(response.body);
@@ -163,9 +163,9 @@ class _RecipieTileState extends State<RecipieTile> {
 
   String ingredients;
 
-  getIngredients(String recipeurl) async {
+  getIngredients(String recipeid) async {
     String url =
-        "https://api.spoonacular.com/recipes/$recipeurl/information?apiKey=$apikey";
+        "https://api.spoonacular.com/recipes/$recipeid/information?apiKey=$apikey";
 
     var response = await http.get(url);
     Map<String, dynamic> jsonData = jsonDecode(response.body);

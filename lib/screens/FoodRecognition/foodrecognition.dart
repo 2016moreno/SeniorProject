@@ -16,6 +16,8 @@ class FoodRecognition extends StatefulWidget {
 }
 
 class _FoodRecognition extends State<FoodRecognition> {
+  List<dynamic> arr = [];
+
   String _model = yolo;
   File _image;
 
@@ -102,6 +104,8 @@ class _FoodRecognition extends State<FoodRecognition> {
 
     setState(() {
       _recognitions = recognitions;
+      arr = recognitions;
+      print(arr);
     });
   }
 
@@ -111,6 +115,8 @@ class _FoodRecognition extends State<FoodRecognition> {
 
     setState(() {
       _recognitions = recognitions;
+      arr = recognitions;
+      print(arr);
     });
   }
 
