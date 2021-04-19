@@ -39,6 +39,7 @@ class _FoodSaverState extends State<FoodSaver> {
       foodsaverModel = FoodSaverModel.fromMap(element);
       foodsaverrecipes.add(foodsaverModel);
     });
+
     // jsonData["id"].forEach((element) {
     //   FoodSaverModel foodsaverModel = new FoodSaverModel();
     //   foodsaverModel = FoodSaverModel.fromMap(element);
@@ -66,7 +67,7 @@ class _FoodSaverState extends State<FoodSaver> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Insert ingredients below"),
+        title: Text("Add ingredients for a recipe"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

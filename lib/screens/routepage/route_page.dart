@@ -12,7 +12,7 @@ class RoutePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Route Page"),
+        title: Text("Pick a catagory"),
       ),
       body: Align(
         child: Column(
@@ -32,7 +32,7 @@ class RoutePage extends StatelessWidget {
                   Navigator.pushNamed(context, FoodRecognition.routeName);
                 },
                 child: Text(
-                  "Food Recognition",
+                  "Food Recognition to Recipe",
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     color: Colors.white,
@@ -53,7 +53,7 @@ class RoutePage extends StatelessWidget {
                   Navigator.pushNamed(context, SearchRecipe.routeName);
                 },
                 child: Text(
-                  "Search Recipes",
+                  "Search for Recipes",
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     color: Colors.white,
@@ -74,26 +74,7 @@ class RoutePage extends StatelessWidget {
                   Navigator.pushNamed(context, FoodSaver.routeName);
                 },
                 child: Text(
-                  "Food Saver Feature",
-                  style: TextStyle(
-                    fontSize: getProportionateScreenWidth(18),
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            Spacer(),
-            SizedBox(
-              width: 300,
-              height: getProportionateScreenHeight(56),
-              child: FlatButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                color: kPrimaryColor,
-                onPressed: () {},
-                child: Text(
-                  "Build a recipe",
+                  "Ingredients to Recipe",
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(18),
                     color: Colors.white,
