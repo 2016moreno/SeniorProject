@@ -19,7 +19,6 @@ import 'package:food_app/screens/FoodRecognition/models/foodrecognitioningredien
 
 import 'package:food_app/screens/FoodRecognition/foodrecognitionviewer.dart';
 
-const String ssd = "SSD MobileNet";
 const String yolo = "Tiny YOLOv2";
 
 class FoodRecognition extends StatefulWidget {
@@ -29,90 +28,70 @@ class FoodRecognition extends StatefulWidget {
 }
 
 class _FoodRecognition extends State<FoodRecognition> {
-  List<dynamic> arr = [];
   List<dynamic> ingredients = List();
-
   String help;
   var helparray = [];
-
-  String _model = yolo;
-  File _image;
-
-  double _imageWidth;
-  double _imageHeight;
-  bool _busy = false;
-
-  List _recognitions;
+  bool busy = false;
 
   @override
   void initState() {
     super.initState();
-    _busy = true;
+    busy = true;
 
-    loadModel().then((val) {
+    tfliteloadmodel().then((val) {
       setState(() {
-        _busy = false;
+        busy = false;
       });
     });
   }
 
-  loadModel() async {
+  tfliteloadmodel() async {
     Tflite.close();
-    try {
-      String res;
-      if (_model == yolo) {
-        res = await Tflite.loadModel(
-          model: "assets/tflite/yolov2_tiny.tflite",
-          labels: "assets/tflite/yolov2_tiny.txt",
-        );
-      } else {
-        res = await Tflite.loadModel(
-          model: "assets/tflite/ssd_mobilenet.tflite",
-          labels: "assets/tflite/ssd_mobilenet.txt",
-        );
-      }
-      print(res);
-    } on PlatformException {
-      print("Failed to load the model");
-    }
+    String loadModels;
+    loadModels = await Tflite.loadModel(
+      model: "assets/tflite/yolov2_tiny.tflite",
+      labels: "assets/tflite/yolov2_tiny.txt",
+    );
+    print(loadModels);
   }
 
   selectFromImagePicker() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (image == null) return;
     setState(() {
-      _busy = true;
+      busy = true;
     });
-    predictImage(image);
+    tempImagePrediction(image);
   }
 
-  predictImage(File image) async {
-    if (image == null) return;
+  File loadimage;
+  double imagesideW;
+  double imagetallH;
 
-    if (_model == yolo) {
-      await yolov2Tiny(image);
-    } else {
-      await ssdMobileNet(image);
-    }
+  tempImagePrediction(File tempImage) async {
+    await tempImageYolov2(tempImage);
 
-    FileImage(image)
+    FileImage(tempImage)
         .resolve(ImageConfiguration())
-        .addListener((ImageStreamListener((ImageInfo info, bool _) {
+        .addListener((ImageStreamListener((ImageInfo tempimageinfo, bool _) {
           setState(() {
-            _imageWidth = info.image.width.toDouble();
-            _imageHeight = info.image.height.toDouble();
+            imagesideW = tempimageinfo.image.width.toDouble();
+            imagetallH = tempimageinfo.image.height.toDouble();
           });
         })));
 
     setState(() {
-      _image = image;
-      _busy = false;
+      loadimage = tempImage;
+      busy = false;
     });
   }
 
-  yolov2Tiny(File image) async {
-    var recognitions = await Tflite.detectObjectOnImage(
-        path: image.path,
+  List imagerec;
+  List<dynamic> imagearray = [];
+
+  tempImageYolov2(File tempImage) async {
+    var tempImageRec = await Tflite.detectObjectOnImage(
+        path: tempImage.path,
         model: "YOLO",
         threshold: 0.3,
         imageMean: 0.0,
@@ -120,40 +99,29 @@ class _FoodRecognition extends State<FoodRecognition> {
         numResultsPerClass: 1);
 
     setState(() {
-      _recognitions = recognitions;
-      arr = recognitions;
-      print(arr);
-    });
-  }
-
-  ssdMobileNet(File image) async {
-    var recognitions = await Tflite.detectObjectOnImage(
-        path: image.path, numResultsPerClass: 1);
-
-    setState(() {
-      _recognitions = recognitions;
-      arr = recognitions;
-      print(arr);
+      imagerec = tempImageRec;
+      imagearray = tempImageRec;
+      print(imagearray);
     });
   }
 
   List<Widget> renderBoxes(Size screen) {
-    if (_recognitions == null) return [];
-    if (_imageWidth == null || _imageHeight == null) return [];
+    if (imagerec == null) return [];
+    if (imagesideW == null || imagetallH == null) return [];
 
-    double factorX = screen.width;
-    double factorY = _imageHeight / _imageHeight * screen.width;
+    double x = screen.width;
+    double y = imagetallH / imagetallH * screen.width;
 
     Color blue = Colors.red;
 
-    return _recognitions.map((re) {
-      help = "${re["detectedClass"]}";
+    return imagerec.map((tempImageRecognition) {
+      help = "${tempImageRecognition["detectedClass"]}";
       helparray.add(help);
       return Positioned(
-        left: re["rect"]["x"] * factorX,
-        top: re["rect"]["y"] * factorY,
-        width: re["rect"]["w"] * factorX,
-        height: re["rect"]["h"] * factorY,
+        left: tempImageRecognition["rect"]["x"] * x,
+        top: tempImageRecognition["rect"]["y"] * y,
+        width: tempImageRecognition["rect"]["w"] * x,
+        height: tempImageRecognition["rect"]["h"] * y,
         child: Container(
           decoration: BoxDecoration(
               border: Border.all(
@@ -161,7 +129,7 @@ class _FoodRecognition extends State<FoodRecognition> {
             width: 3,
           )),
           child: Text(
-            "${re["detectedClass"]} ${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%",
+            "${tempImageRecognition["detectedClass"]} ${(tempImageRecognition["confidenceInClass"] * 100).toStringAsFixed(0)}%",
             style: TextStyle(
               background: Paint()..color = blue,
               color: Colors.white,
@@ -225,12 +193,13 @@ class _FoodRecognition extends State<FoodRecognition> {
       top: 0.0,
       left: 0.0,
       width: size.width,
-      child: _image == null ? Text("No Image Selected") : Image.file(_image),
+      child:
+          loadimage == null ? Text("No Image Selected") : Image.file(loadimage),
     ));
 
     stackChildren.addAll(renderBoxes(size));
 
-    if (_busy) {
+    if (busy) {
       stackChildren.add(Center(
         child: CircularProgressIndicator(),
       ));
