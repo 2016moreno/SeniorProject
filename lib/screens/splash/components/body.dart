@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
 import 'package:food_app/screens/routepage/route_page.dart';
 import 'package:food_app/size_config.dart';
 
@@ -86,12 +85,12 @@ class _BodyState extends State<Body> {
 
   AnimatedContainer buildDot({int index}) {
     return AnimatedContainer(
-      duration: kAnimationDuration,
+      duration: Duration(milliseconds: 200),
       margin: EdgeInsets.only(right: 5),
       height: 6,
       width: currentPage == index ? 20 : 6,
       decoration: BoxDecoration(
-        color: currentPage == index ? kPrimaryColor : Color(0xFFD8D8D8),
+        color: currentPage == index ? Color(0xFFFF7643) : Color(0xFFD8D8D8),
         borderRadius: BorderRadius.circular(3),
       ),
     );
@@ -116,7 +115,7 @@ class DefaultButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        color: kPrimaryColor,
+        color: Color(0xFFFF7643),
         onPressed: press,
         child: Text(
           "Continue",

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class SplashContent extends StatelessWidget {
@@ -20,7 +19,7 @@ class SplashContent extends StatelessWidget {
           "SEE-FOOD",
           style: TextStyle(
             fontSize: getProportionateScreenWidth(36),
-            color: kPrimaryColor,
+            color: Color(0xFFFF7643),
             fontWeight: FontWeight.bold,
           ),
         ),

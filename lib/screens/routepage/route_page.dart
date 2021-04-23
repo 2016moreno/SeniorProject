@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
 import 'package:food_app/screens/FoodSaver/foodsaver.dart';
 import 'package:food_app/screens/SearchRecipes/searchrecipe.dart';
 import 'package:food_app/screens/routepage/route_page.dart';
@@ -27,7 +26,7 @@ class RoutePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                color: kPrimaryColor,
+                color: Color(0xFFFF7643),
                 onPressed: () {
                   Navigator.pushNamed(context, FoodRecognition.routeName);
                 },
@@ -48,7 +47,7 @@ class RoutePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                color: kPrimaryColor,
+                color: Color(0xFFFF7643),
                 onPressed: () {
                   Navigator.pushNamed(context, SearchRecipe.routeName);
                 },
@@ -69,7 +68,7 @@ class RoutePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                color: kPrimaryColor,
+                color: Color(0xFFFF7643),
                 onPressed: () {
                   Navigator.pushNamed(context, FoodSaver.routeName);
                 },

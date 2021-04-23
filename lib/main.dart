@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:food_app/constants.dart';
 import 'package:food_app/routes.dart';
 import 'package:food_app/screens/splash/splash_screen.dart';
 
@@ -8,7 +7,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,11 +23,10 @@ class MyApp extends StatelessWidget {
             )),
         scaffoldBackgroundColor: Colors.white,
         textTheme: TextTheme(
-          bodyText1: TextStyle(color: kTextColor),
-          bodyText2: TextStyle(color: kTextColor),
+          bodyText1: TextStyle(color: Colors.black),
+          bodyText2: TextStyle(color: Colors.black),
         ),
       ),
-      // home: SplashScreen(),
       initialRoute: SplashScreen.routeName,
       routes: routes,
     );
