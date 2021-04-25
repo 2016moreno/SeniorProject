@@ -29,8 +29,8 @@ class FoodRecognition extends StatefulWidget {
 
 class _FoodRecognition extends State<FoodRecognition> {
   List<dynamic> ingredients = List();
-  String help;
-  var helparray = [];
+  String imagename;
+  var imagenamearray = [];
   bool busy = false;
 
   @override
@@ -112,11 +112,9 @@ class _FoodRecognition extends State<FoodRecognition> {
     double x = screen.width;
     double y = imagetallH / imagetallH * screen.width;
 
-    Color blue = Colors.red;
-
     return imagerec.map((tempImageRecognition) {
-      help = "${tempImageRecognition["detectedClass"]}";
-      helparray.add(help);
+      imagename = "${tempImageRecognition["detectedClass"]}";
+      imagenamearray.add(imagename);
       return Positioned(
         left: tempImageRecognition["rect"]["x"] * x,
         top: tempImageRecognition["rect"]["y"] * y,
@@ -125,13 +123,13 @@ class _FoodRecognition extends State<FoodRecognition> {
         child: Container(
           decoration: BoxDecoration(
               border: Border.all(
-            color: blue,
+            color: Colors.red,
             width: 3,
           )),
           child: Text(
             "${tempImageRecognition["detectedClass"]} ${(tempImageRecognition["confidenceInClass"] * 100).toStringAsFixed(0)}%",
             style: TextStyle(
-              background: Paint()..color = blue,
+              background: Paint()..color = Colors.red,
               color: Colors.white,
               fontSize: 15,
             ),
@@ -277,9 +275,9 @@ class _FoodRecognition extends State<FoodRecognition> {
         ),
         color: Color(0xFFFF7643),
         onPressed: () async {
-          await getRecipesIngredients(helparray);
+          await getRecipesIngredients(imagenamearray);
           print(
-              "https://api.spoonacular.com/recipes/findByIngredients?apiKey=54faac17dd374f5fb46e743c18a4c92e&ingredients=$helparray&number=10&ranking2");
+              "https://api.spoonacular.com/recipes/findByIngredients?apiKey=54faac17dd374f5fb46e743c18a4c92e&ingredients=$imagenamearray&number=10&ranking2");
         },
       );
 }

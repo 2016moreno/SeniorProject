@@ -173,15 +173,13 @@ class _RecipieTileState extends State<RecipieTile> {
 
   var apikey = '54faac17dd374f5fb46e743c18a4c92e&';
   //"https://api.spoonacular.com/recipes/$foodurl/information?apiKey=54faac17dd374f5fb46e743c18a4c92e&"
+  // String url =
+  //     "https://api.spoonacular.com/recipes/$recipeid/information?apiKey=$apikey";
 
+  // print(url);
   String ingredients;
 
   getIngredients(String recipeid) async {
-    // String url =
-    //     "https://api.spoonacular.com/recipes/$recipeid/information?apiKey=$apikey";
-
-    // print(url);
-
     var response = await http.get(
         "https://api.spoonacular.com/recipes/$recipeid/information?apiKey=$apikey");
     Map<String, dynamic> jsonData = jsonDecode(response.body);
