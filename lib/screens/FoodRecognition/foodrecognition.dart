@@ -109,27 +109,30 @@ class _FoodRecognition extends State<FoodRecognition> {
     if (imagerec == null) return [];
     if (imagesideW == null || imagetallH == null) return [];
 
-    double x = screen.width;
-    double y = imagetallH / imagetallH * screen.width;
-
     return imagerec.map((tempImageRecognition) {
       imagename = "${tempImageRecognition["detectedClass"]}";
       imagenamearray.add(imagename);
       return Positioned(
-        left: tempImageRecognition["rect"]["x"] * x,
-        top: tempImageRecognition["rect"]["y"] * y,
-        width: tempImageRecognition["rect"]["w"] * x,
-        height: tempImageRecognition["rect"]["h"] * y,
+        left: tempImageRecognition["rect"]["x"] * screen.width,
+        top: tempImageRecognition["rect"]["y"] *
+            imagetallH /
+            imagetallH *
+            screen.width,
+        width: tempImageRecognition["rect"]["w"] * screen.width,
+        height: tempImageRecognition["rect"]["h"] *
+            imagetallH /
+            imagetallH *
+            screen.width,
         child: Container(
           decoration: BoxDecoration(
               border: Border.all(
-            color: Colors.red,
+            color: Color(0xFFFF7643),
             width: 3,
           )),
           child: Text(
             "${tempImageRecognition["detectedClass"]} ${(tempImageRecognition["confidenceInClass"] * 100).toStringAsFixed(0)}%",
             style: TextStyle(
-              background: Paint()..color = Colors.red,
+              background: Paint()..color = Color(0xFFFF7643),
               color: Colors.white,
               fontSize: 15,
             ),
