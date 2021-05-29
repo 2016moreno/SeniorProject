@@ -67,8 +67,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-The idea popped up when me and my friend @VoidPixel wanted to start making more recipes at home instead of going out to eat all the time. During the COVID-19 pandemic,
-we realized how inactive we became and wanted to create a simple mobile application that can look up recipes at ease. Together, we made See-Food.
+The idea popped up when me and my friend @VoidPixel wanted to start making more recipes at home instead of going out to eat. During the COVID-19 pandemic,
+we realized how inactive we became and wanted to create a simple mobile application that can look up recipes at ease by using ingredients we already had at home. Together, we made See-Food.
 
 ### Built With
 
@@ -94,6 +94,13 @@ This is a list of things you need to use the mobile app.
 ## Usage
 
 [Video Demo](https://www.youtube.com/watch?v=-qWgy3pHkb4)
+
+Below are images of what is included in the app
+
+![2021-05-29 12_01_56-Window](https://user-images.githubusercontent.com/30539117/120078597-cd1f0180-c075-11eb-9626-c98360466bcd.png)
+![2021-05-29 12_02_12-Window](https://user-images.githubusercontent.com/30539117/120078598-ce502e80-c075-11eb-864a-cd28eb46f2f8.png)
+![2021-05-29 12_02_29-Window](https://user-images.githubusercontent.com/30539117/120078601-cee8c500-c075-11eb-9592-3cd73cc7aa85.png)
+
 
 <!-- CONTRIBUTING -->
 ## Contributing
