@@ -111,8 +111,6 @@ Contributions are what make the open source community such an amazing place to b
 
 David A. Moreno - [Resume](https://drive.google.com/file/d/1Cdm_30iI-wtqBdqJRT4igMyEMhjAyCdl/view?usp=sharing) - 2016moreno@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
 
 
 <!-- ACKNOWLEDGEMENTS -->
