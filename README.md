@@ -33,14 +33,7 @@
   <p align="center">
     A mobile application that can search up recipes with ease by either searching for specific ingredients, searching for a recipe name or searching for recipes based on a picture taken and using the ingredients recognized. 
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    
   </p>
 </p>
 
