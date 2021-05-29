@@ -95,8 +95,6 @@ This is a list of things you need to use the mobile app.
 
 [Video Demo](https://www.youtube.com/watch?v=-qWgy3pHkb4)
 
-_For more examples, please refer to the [Documentation](https://example.com)_
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
