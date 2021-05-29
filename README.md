@@ -76,6 +76,7 @@ we realized how inactive we became and wanted to create a simple mobile applicat
 * [YOLO Object Detection System](https://pjreddie.com/darknet/yolo/)
 * [TFLite](https://www.tensorflow.org/lite)
 * [Roboflow](https://roboflow.com/)
+* [Spoonacular API](https://spoonacular.com/food-api)
 
 
 <!-- GETTING STARTED -->
