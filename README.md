@@ -117,7 +117,7 @@ Contributions are what make the open source community such an amazing place to b
 <!-- CONTACT -->
 ## Contact
 
-David A. Moreno - [Resume](https://drive.google.com/file/d/1Cdm_30iI-wtqBdqJRT4igMyEMhjAyCdl/view?usp=sharing) - 2016moreno@gmail.com
+David A. Moreno - [E-Portfolio](https://2016moreno.github.io/) - [Resume](https://drive.google.com/file/d/1w3FQBWkQdnysgJzVBpL5S7BzJvY6VyfC/view?usp=sharing) - 2016moreno@gmail.com
 
 
 
